@@ -15,7 +15,7 @@ class Crew extends Model
         'email',
         'address',
         'education',
-        'contact_number',
+        'contact_details',
     ];
 
     public function documents()

@@ -99,4 +99,7 @@ class CrewController extends Controller
     return view('crews.documents', compact('documents'));
 }
 
+
+//Api 
+
 }

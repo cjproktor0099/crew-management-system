@@ -50,6 +50,4 @@ Route::delete('users/{id}', [AdminUserController::class, 'destroy'])->name('user
 
 
 
-
-Route::get('/crews', [CrewController::class, 'index'])->name('crews.index');
 require __DIR__.'/auth.php';

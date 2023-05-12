@@ -13,13 +13,22 @@
                 <!-- Navigation Links -->
                 <!-- Dashboard Link -->
                 <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                    {{ __('Dashboard') }}
+                    {{ __('Crews') }}
                 </x-nav-link>
 
                 <!-- Documents Link -->
                 <x-nav-link :href="route('documents.index')" :active="request()->routeIs('documents.index')" data-toggle="tooltip" data-placement="bottom" title="{{ __('View Documents') }}">
                     {{ __('Documents') }}
                 </x-nav-link>
+                @if(auth()->user()->isAdmin())
+                @if (Auth::check() && Auth::user()->isAdmin())
+
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')" data-toggle="tooltip" data-placement="bottom" title="{{ __('View Users') }}">
+                        {{ __('Users') }}
+                    </x-nav-link>
+            @endif
+
+            @endif
                 
             </div>
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\CrewController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +28,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/crews/{crew}/edit', [CrewController::class, 'edit'])->name('crews.edit');
     Route::put('/crews/{crew}', [CrewController::class, 'update'])->name('crews.update');
     Route::delete('/crews/{crew}', [CrewController::class, 'destroy'])->name('crews.destroy');
-    
     Route::resource('documents', 'App\Http\Controllers\DocumentController');
 
 });
@@ -37,9 +37,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/documents', [App\Http\Controllers\DocumentController::class, 'index'])->name('documents.index');
+
+
 
 });
-	
+
+
+
+Route::get('users', [AdminUserController::class, 'index'])->name('users.index');
+Route::get('users/create', [AdminUserController::class, 'create'])->name('users.create');
+Route::post('users', [AdminUserController::class, 'store'])->name('users.store');
+Route::get('users/{id}/edit', [AdminUserController::class, 'edit'])->name('users.edit');
+Route::put('users/{id}', [AdminUserController::class, 'update'])->name('users.update');
+Route::delete('users/{id}', [AdminUserController::class, 'destroy'])->name('users.destroy');
+
+
+
+
 Route::get('/crews', [CrewController::class, 'index'])->name('crews.index');
 require __DIR__.'/auth.php';

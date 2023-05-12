@@ -45,6 +45,22 @@
 
 
         <script>
+        $(document).ready(function() {
+            $('#users-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route("users.index") }}',
+                columns: [
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                    { data: 'name', name: 'name' },
+                    { data: 'email', name: 'email' },
+                    { data: 'action', name: 'action', orderable: false, searchable: false },
+                ]
+            });
+        });
+
+
+
             $(document).ready(function() {
                 $('#documents-table').DataTable({
                     processing: true,
@@ -64,7 +80,7 @@
                 });
             });
         </script>
-        
+
         <script type="text/javascript">
                 $(function () {
                     var table = $('.data-table').DataTable({

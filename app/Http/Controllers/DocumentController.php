@@ -99,8 +99,9 @@ class DocumentController extends Controller
     public function edit(Document $document)
     {
         $crewMembers = Crew::all();
-        return view('documents.create', compact('crewMembers'));
+        return view('documents.edit', compact('document', 'crewMembers'));
     }
+    
     
 
     /**
@@ -121,10 +122,15 @@ public function update(Request $request, Document $document)
         'document_number' => 'required|unique:documents,document_number,' . $document->id,
         'date_issued' => 'required',
         'date_expiry' => 'required',
-        'remarks' => 'nullable'
+        'remarks' => 'nullable',
+        'crew_id' => 'required|exists:crews,id'
     ]);
-
+    
     $document->update($validatedData);
+
+    // update crew member
+    $document->crew_id = $request->crew_id;
+    $document->save();
 
     return redirect()->route('documents.index')->with('success', 'Document updated successfully.');
 }

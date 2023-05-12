@@ -32,7 +32,7 @@
                         </div>
                         <div class="form-group">
                             <label for="address">Address</label>
-                            <textarea class="form-control" id="address" name="address" required>{{ old('address', $crew->address) }}</textarea>
+                            <input class="form-control" id="address" name="address" value = "{{ old('address', $crew->address) }}" required></input>
                         </div>
                         <div class="form-group">
                             <label for="education">Education</label>

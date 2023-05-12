@@ -21,26 +21,25 @@ class CrewController extends Controller
                 ->addColumn('action', function ($row) {
                     $editUrl = route('crews.edit', $row->id);
                     $deleteUrl = route('crews.destroy', $row->id);
+                    $viewDocs = json_encode($row->documents);
                     $csrf = csrf_token();
                     $actionBtn = <<<EOF
-                    <div class="btn-group">
-                        <a href="$editUrl" class="edit btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
-                        <form action="$deleteUrl" id="delete-form" method="POST">
-                            <input type="hidden" name="_token" value="$csrf">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button type="button" class="delete btn btn-danger btn-sm bg-red-500 opacity-100" data-toggle="modal" data-target="#confirm-delete"><i class="fas fa-trash"></i></button>
-                        </form>
-                    </div>
-                EOF;
-                
-                
-                
+                        <div class="btn-group">
+                            <a href="$editUrl" class="edit btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
+                            <a href="#" class="view-docs btn btn-info btn-sm" data-toggle="modal" data-target="#view-documents" data-documents='$viewDocs'><i class="fas fa-file-alt"></i></a>
+                            <form action="$deleteUrl" id="delete-form" method="POST">
+                                <input type="hidden" name="_token" value="$csrf">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="button" class="delete btn btn-danger btn-sm bg-red-500 opacity-100" data-toggle="modal" data-target="#confirm-delete"><i class="fas fa-trash"></i></button>
+                            </form>
+                        </div>
+                        EOF;
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
-
+        
         return view('dashboard');
     }
 
@@ -94,5 +93,10 @@ class CrewController extends Controller
     
         return redirect()->route('crews.index')->with('success', 'Crew ' . $crewName . ' deleted successfully.');
     }
-    
+    public function showDocuments(Crew $crew)
+{
+    $documents = $crew->documents;
+    return view('crews.documents', compact('documents'));
+}
+
 }

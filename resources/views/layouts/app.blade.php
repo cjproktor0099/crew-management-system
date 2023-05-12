@@ -105,6 +105,27 @@
                     $(this).find('.btn-ok').attr('form', $(e.relatedTarget).closest('form').attr('id'));
                 });
             });
+
+
+
+                        $(document).on('click', '.view-docs', function(){
+            var crew_id = $(this).data('id');
+            var documents = $(this).data('documents');
+            var rows = '';
+            $.each(documents, function(index, document){
+                rows += '<tr>' +
+                        '<td>' + document.code + '</td>' +
+                        '<td>' + document.name + '</td>' +
+                        '<td>' + document.document_number + '</td>' +
+                        '<td>' + document.date_issued + '</td>' +
+                        '<td>' + document.date_expiry + '</td>' +
+                        '<td>' + document.remarks + '</td>' +
+                        '</tr>';
+            });
+            $('#document-list').html(rows);
+            $('#view-documents').modal('show');
+            });
+
             </script>
 
     </body>

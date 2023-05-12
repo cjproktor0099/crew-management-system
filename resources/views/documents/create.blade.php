@@ -37,7 +37,7 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="name">{{ __('Name') }}</label>
+                            <label for="name">{{ __('Document Name') }}</label>
                             <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
                             @error('name')
                                 <span class="invalid-feedback" role="alert">
@@ -73,7 +73,7 @@
                         </div>
                         <div class="form-group">
                             <label for="remarks">{{ __('Remark') }}</label>
-                            <textarea id="remarks" type="date" class="form-control @error('remarks') is-invalid @enderror" name="remarks" required autocomplete="remarks">{{ old('remarks') }}</textarea>
+                            <textarea id="remarks" type="date" class="form-control @error('remarks') is-invalid @enderror" name="remarks"  autocomplete="remarks">{{ old('remarks') }}</textarea>
                             @error('remarks')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

@@ -37,7 +37,7 @@
             </div>
         </div>
     </div>
-        <!-- Modal -->
+        <!-- Modal for Deleting Crew Member-->
     <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -55,5 +55,36 @@
             </div>
         </div>
     </div>
+
+        <!-- Modal for Viewing the list of Documents of a certain Crew Member-->
+    <div class="modal fade" id="view-documents" tabindex="-1" role="dialog" aria-labelledby="view-documents-label" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="view-documents-label">View Documents</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Document Number</th>
+                    <th>Date Issued</th>
+                    <th>Date Expiry</th>
+                    <th>Remarks</th>
+                  </tr>
+                </thead>
+                <tbody id="document-list">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      
 
 </x-app-layout>

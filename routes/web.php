@@ -28,8 +28,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/crews/{crew}/edit', [CrewController::class, 'edit'])->name('crews.edit');
     Route::put('/crews/{crew}', [CrewController::class, 'update'])->name('crews.update');
     Route::delete('/crews/{crew}', [CrewController::class, 'destroy'])->name('crews.destroy');
+    Route::get('/crews/{crew}/documents', [CrewController::class, 'showDocuments'])->name('crews.documents');
     Route::resource('documents', 'App\Http\Controllers\DocumentController');
-
 });
 
 
@@ -37,9 +37,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-
-
 });
 
 

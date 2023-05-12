@@ -11,11 +11,16 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div>
+                <!-- Dashboard Link -->
+                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    {{ __('Dashboard') }}
+                </x-nav-link>
+
+                <!-- Documents Link -->
+                <x-nav-link :href="route('documents.index')" :active="request()->routeIs('documents.index')" data-toggle="tooltip" data-placement="bottom" title="{{ __('View Documents') }}">
+                    {{ __('Documents') }}
+                </x-nav-link>
+                
             </div>
 
             <!-- Settings Dropdown -->

@@ -12,6 +12,10 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
         <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+         <!-- Icon -->
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -25,6 +29,7 @@
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
+                    
                 </header>
             @endif
 
@@ -37,6 +42,29 @@
         <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+
+        <script>
+            $(document).ready(function() {
+                $('#documents-table').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{{ route("documents.index") }}',
+                    columns: [
+                        { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                        { data: 'code', name: 'code' },
+                        { data: 'name', name: 'name' },
+                        { data: 'document_number', name: 'document_number' },
+                        { data: 'date_issued', name: 'date_issued' },
+                        { data: 'date_expiry', name: 'date_expiry' },
+                        { data: 'remarks', name: 'remarks' },
+                        { data: 'crew_name', name: 'crew_name' },
+                        { data: 'action', name: 'action', orderable: false, searchable: false },
+                    ]
+                });
+            });
+        </script>
+        
         <script type="text/javascript">
                 $(function () {
                     var table = $('.data-table').DataTable({
@@ -46,15 +74,22 @@
                         columns: [
                             {data: 'first_name', name: 'first_name'},
                             {data: 'last_name', name: 'last_name'},
+                            {data: 'middle_name', name: 'middle_name'},
                             {data: 'email', name: 'email'},
                             {data: 'address', name: 'address'},
                             {data: 'education', name: 'education'},
-                            {data: 'contact_details', name: 'contact_details'},
                             {data: 'action', name: 'action', orderable: false, searchable: false},
                         ]
                     });
                 });
 
-          </script>
+
+                        $(document).ready(function() {
+                $('#confirm-delete').on('show.bs.modal', function(e) {
+                    $(this).find('.btn-ok').attr('form', $(e.relatedTarget).closest('form').attr('id'));
+                });
+            });
+            </script>
+
     </body>
 </html>

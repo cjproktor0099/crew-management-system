@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Documents') }}
         </h2>
     </x-slot>
 
@@ -17,28 +17,29 @@
             @endif
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <a href="{{ route('crews.create') }}" class="btn btn-primary mb-3">{{ __('Add Crew') }}</a>
-                    <table class="table table-bordered data-table">
+                    <a href="{{ route('documents.create') }}" class="btn btn-primary mb-3">{{ __('Add Documents') }}</a>
+                    <table class="table table-bordered" id="documents-table">
                         <thead>
                             <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Middle Name</th>
-                                <th>Email</th>
-                                <th>Address</th>
-                                <th>Education</th>
+                                <th>#</th>
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>Document Number</th>
+                                <th>Date Issued</th>
+                                <th>Date Expiry</th>
+                                <th>Remarks</th>
+                                <th>Crew Member</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-        <!-- Modal -->
-    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+      
+      <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="delete-modal-title" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

@@ -12,8 +12,10 @@ class AdminUserController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->ajax()) {
-            $data = User::select('*');
+        $loggedInUserId = auth()->id();
+    
+    if ($request->ajax()) {
+        $data = User::where('id', '!=', $loggedInUserId)->select('*');
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -21,6 +23,7 @@ class AdminUserController extends Controller
                     $deleteUrl = route('users.destroy', $row->id);
                     $csrf = csrf_token();
                     $actionBtn = <<<EOF
+                    <div class="text-center" style="width: 100%;">
                         <div class="btn-group">
                             <a href="$editUrl" class="edit btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
                             <form action="$deleteUrl" id="delete-form" method="POST">
@@ -29,7 +32,9 @@ class AdminUserController extends Controller
                                 <button type="button" class="delete btn btn-danger btn-sm bg-red-500 opacity-100" data-toggle="modal" data-target="#confirm-delete"><i class="fas fa-trash"></i></button>
                             </form>
                         </div>
-                    EOF;
+                    </div>
+                EOF;
+                
                     
                     return $actionBtn;
                 })
@@ -81,26 +86,40 @@ class AdminUserController extends Controller
     
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $user = User::findOrFail($id);
+    
+        // Only admin can update users
+        if (!auth()->user()->isAdmin()) {
+            abort(403);
+        }
+    
+        // Validate input fields
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users,email,'.$id.'|max:255',
-            'password' => 'nullable|string|min:8|max:255',
-            'isAdmin' => 'required|boolean',
+            'username' => ['required','string','max:10','unique:users,username' . ($id ? ",$id" : ''),'regex:/^[A-Za-z0-9]+$/'],
+            'email' => 'required|string|email|max:255|unique:users,email,'.$id,
+            'password' => 'nullable|string|min:10',
+            'isAdmin' => 'nullable|boolean',
         ]);
     
-        $user = User::findOrFail($id);
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->isAdmin = $request->input('isAdmin');
+        // Update user
+        $user->name = $validatedData['name'];
+        $user->username = $validatedData['username'];
+        $user->email = $validatedData['email'];
     
-        if ($request->has('password') && $request->input('password')) {
-            $user->password = Hash::make($request->input('password'));
+        if (!empty($validatedData['password'])) {
+            $user->password = Hash::make($validatedData['password']);
+        }
+    
+        if (auth()->user()->isAdmin() && isset($validatedData['isAdmin'])) {
+            $user->isAdmin = $validatedData['isAdmin'];
         }
     
         $user->save();
     
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
+    
     
     public function destroy($id)
     {

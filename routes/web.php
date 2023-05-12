@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\AdminUserController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CrewController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,13 +16,16 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        return redirect()->route('dashboard');
+    } else {
+        return redirect()->route('login');
+    }
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', [CrewController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [CrewController::class, 'index'])->name('dashboard');
     Route::get('/crews', [CrewController::class, 'index'])->name('crews.index');
     Route::get('/crews/create', [CrewController::class, 'create'])->name('crews.create');
     Route::post('/crews', [CrewController::class, 'store'])->name('crews.store');

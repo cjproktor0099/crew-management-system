@@ -1,0 +1,12 @@
+
+- Admin Role
+username: admin1234
+password: admin12345
+
+- User Role
+username: user1234
+password: user123456
+
+
+Database File 
+Database/crew-management-system.sql
